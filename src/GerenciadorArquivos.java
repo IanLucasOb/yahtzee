@@ -8,17 +8,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GerenciadorArquivos {
-    private String caminhoDoArquivoDeJogadores = "../db/jogadores.txt";
+    private String caminhoDoArquivoDeJogadores = "jogadores.txt";
+    private String caminhoArquivoResultados = "resultados.txt";
+
     private List<String> vetorJogadores = new ArrayList<>();
 
     public void gravarJogador(String nome) {
         try {
             File arquivo = new File(caminhoDoArquivoDeJogadores);
-            if(!arquivo.exists()) {
-                throw new Error("O arquivo " + caminhoDoArquivoDeJogadores + "não existe!");
+            // Cria o arquivo caso não exista
+            if (!arquivo.exists()) {
+                arquivo.createNewFile();
+                // throw new Error("O arquivo " + caminhoDoArquivoDeJogadores + "não existe!");
             }
-            FileWriter escritorDeArquivos = new FileWriter(caminhoDoArquivoDeJogadores, true);
-            BufferedWriter escritorBuffer = new BufferedWriter(escritorDeArquivos);
+            FileWriter escritorDeArquivo = new FileWriter(caminhoDoArquivoDeJogadores, true);
+            BufferedWriter escritorBuffer = new BufferedWriter(escritorDeArquivo);
 
             escritorBuffer.write(nome);
             escritorBuffer.newLine();
@@ -49,6 +53,36 @@ public class GerenciadorArquivos {
             leitor.close();
         } catch (FileNotFoundException e) {
             System.out.println("Ocorreu um erro ao ler os jogadores!");
+            e.printStackTrace();
+        }
+    }
+
+    // Grava os resultados de cada jogador e sua cartela
+    public void gravarResultados(String[] resultados) {
+        try {
+            if (resultados.length > 0) {
+                File arquivo = new File(caminhoArquivoResultados);
+                // Cria o arquivo caso não exista
+                if (!arquivo.exists()) {
+                    arquivo.createNewFile();
+                }
+                // Permite a escrita em um arquivo
+                FileWriter escritorDeArquivo = new FileWriter(arquivo, true);
+                // Armazenar os dados em um buffer
+                BufferedWriter escritorBuffer = new BufferedWriter(escritorDeArquivo);
+
+                for (String string : resultados) {
+                    // Escreve a string no arquivo
+                    escritorBuffer.write(string);
+                    // Nova linha
+                    escritorBuffer.newLine();
+                }
+                // Fechando a stream
+                escritorBuffer.close();
+                System.out.println("Resultados gravados com sucesso!");
+            }
+        } catch (IOException e) {
+            // Trata exceções de IO, se ocorrerem
             e.printStackTrace();
         }
     }
