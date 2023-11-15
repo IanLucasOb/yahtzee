@@ -20,7 +20,7 @@ public class Jogador {
         this.pontuacaoJogador[indice] = valor;
     }
     
-    public int[] getPontuacaoJogador(){ // Pega a lista de pontuação do jogador
+    public int[] getPontuacaoJogador(){ // Pega a lista de pontuação do jogador.
         return this.pontuacaoJogador;
     }
 }
