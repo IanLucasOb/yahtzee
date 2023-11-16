@@ -3,8 +3,7 @@ import java.util.Scanner;
 public class Menu {
     private int escolhaDoUsuario;
     private Scanner scanner = new Scanner(System.in);
-    private GerenciadorArquivos gerenciarArqui = new GerenciadorArquivos();
-    private int quantDeJogadores;
+    private GerenciadorArquivos gerenciarArquivo = new GerenciadorArquivos();
 
     // public Menu() {
     // this.scanner = new Scanner(System.in);
@@ -17,18 +16,21 @@ public class Menu {
             System.out.println(
                     "=-=-=-=-=-= Escolha uma das opções abaixo -=-=-=-=-=-\n"
                             + "| 1 - Iniciar Jogo                                  |\n"
-                            + "| 2 - Ver histórico                                 |\n"
+                            + "| 2 - Cadastrar jogadores                           |\n"
+                            + "| 3 - Ver histórico                                 |\n"
                             + "| 0 - Sair do jogo                                  |\n"
                             + "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
             this.escolhaDoUsuario = scanner.nextInt(); // O nextInt(): não consumia a linha do (Enter);
             scanner.nextLine(); // Consumir a quebra de linha pendente;
             switch (escolhaDoUsuario) {
                 case 1:
-                    perguntarQuant();
                     break;
                 // Aqui irá vir a função jogar;
                 case 2:
-                    break; // Aqui irá vir a função ver histórico;
+                    this.cadastroDeJogador();
+                    break;
+                case 3:
+                    break;
                 case 0:
                     System.out.println("Saindo do jogo. Espero que tenha se divertido.");
                     verificarSaida = 0;
@@ -44,20 +46,30 @@ public class Menu {
         return this.escolhaDoUsuario; // Retorna a escolha do usuario;
     }
 
-    public int getQuantDeJogadores() {
-        return this.quantDeJogadores;
-    }
+    private void cadastroDeJogador() {
+        boolean cadastrando = true;
+        while (cadastrando) {
+            System.out.println("| =-=-=-=-=- Digite o nome do jogador =-=-=-=-=- |");
+            String nomeJogador = scanner.nextLine();
+            gerenciarArquivo.gravarJogador(nomeJogador); // Guardar os nomes no arquivo .txt;
 
-    public void perguntarQuant() {
-        System.out.println("| =-=-=-=-=- Digite a quantidade de jogadores -=-=-=-=-= |");
-        this.quantDeJogadores = scanner.nextInt(); // Variável para guardar a quantidade;
-        scanner.nextLine(); // Consumir a quebra de linha;
+            System.out.println(
+                              "| Deseja adicionar outro jogador ? |\n"
+                            + "| 1 - SIM                          |\n"
+                            + "| 0 - NÃO                          |\n"
+                            + "| =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- |");
+            int escolhaJogador = scanner.nextInt();
+            scanner.nextLine(); // Consumir quebra de linha;
 
-        for (int i = 0; i < this.quantDeJogadores; i++) {
-            System.out.println("| =-=-=-=-=- Digite seu nome de jogador -=-=-=-=-= |");
-            String nomeDoJogador = scanner.nextLine(); // Variável para guardar nome;
-            this.gerenciarArqui.gravarJogador(nomeDoJogador);
+            if (escolhaJogador == 1) {
+                continue; // Continuar o loop caso a escolha for "SIM";
+            } else {
+                System.out.println("| Salvando... |");
+                this.mostrarMenu(); // Voltar ao menu;
+                cadastrando = false; // Alterar o valor da variavel para falsa para quebrar o loop;
+            }
         }
     }
+
 
 }
