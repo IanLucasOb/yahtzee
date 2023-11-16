@@ -15,7 +15,7 @@ public class Menu {
 
         while (verificarSaida != 0) {
             System.out.println(
-                              "=-=-=-=-=-= Escolha uma das opções abaixo -=-=-=-=-=-\n"
+                    "=-=-=-=-=-= Escolha uma das opções abaixo -=-=-=-=-=-\n"
                             + "| 1 - Iniciar Jogo                                  |\n"
                             + "| 2 - Ver histórico                                 |\n"
                             + "| 0 - Sair do jogo                                  |\n"
@@ -24,14 +24,9 @@ public class Menu {
             scanner.nextLine(); // Consumir a quebra de linha pendente;
             switch (escolhaDoUsuario) {
                 case 1:
-                    System.out.println("| =-=-=-=-=- Digite a quantidade de jogadores -=-=-=-=-= |");
-                    this.quantDeJogadores = scanner.nextInt(); // Variável para guardar a quantidade;
-
-                    System.out.println("| =-=-=-=-=- Digite seu nome de jogador -=-=-=-=-= |");
-                    String nomeDoJogador = scanner.nextLine(); // Variável para guardar nome; 
-                    this.gerenciarArqui.gravarJogador(nomeDoJogador);
-                    break; // Aqui irá vir a função jogar;
-
+                    perguntarQuant();
+                    break;
+                // Aqui irá vir a função jogar;
                 case 2:
                     break; // Aqui irá vir a função ver histórico;
                 case 0:
@@ -49,7 +44,20 @@ public class Menu {
         return this.escolhaDoUsuario; // Retorna a escolha do usuario;
     }
 
-    public int geQuantDeJogadores(){
+    public int getQuantDeJogadores() {
         return this.quantDeJogadores;
     }
+
+    public void perguntarQuant() {
+        System.out.println("| =-=-=-=-=- Digite a quantidade de jogadores -=-=-=-=-= |");
+        this.quantDeJogadores = scanner.nextInt(); // Variável para guardar a quantidade;
+        scanner.nextLine(); // Consumir a quebra de linha;
+
+        for (int i = 0; i < this.quantDeJogadores; i++) {
+            System.out.println("| =-=-=-=-=- Digite seu nome de jogador -=-=-=-=-= |");
+            String nomeDoJogador = scanner.nextLine(); // Variável para guardar nome;
+            this.gerenciarArqui.gravarJogador(nomeDoJogador);
+        }
+    }
+
 }
