@@ -3,20 +3,29 @@ public class Cartela {
     private int contYahtzee = 0;
     private int vetorDados[] = new int[5];
 
-    public Cartela(int[] valorDados) {
+    public Cartela() {
         for (int index = 0; index < 16; index++) {
-            if (index < 6) {
-                this.vetorDados[index] = valorDados[index];
-            }
             vetorCartela[index] = 0;
         }
     }
 
+    // Atribui os dados
+    public void setVetorDados(int valorDado[]) {
+        for (int i = 0; i < 5; i++) {
+            this.vetorDados[i] = valorDado[i];
+        }
+    }
+
+    // Pega a cartela completa
+    public int[] getCartela() {
+        return vetorCartela;
+    }
+
     // Função de aproveitamento de código para as 6 primeiras categorias.
-    public int numerosIguais(int numFiltro) {
+    private int numerosIguais(int numFiltro) {
         int contNumIguais = 0;
     
-        for (int i = 0; i > 5; i++) {
+        for (int i = 0; i <= 4; i++) {
             if (this.vetorDados[i] == numFiltro) {
                 contNumIguais += 1;
             }
@@ -25,85 +34,67 @@ public class Cartela {
         return contNumIguais;
     }
 
-    // Quantidade de UM
+    // Quantidade de UM - 1
     public void setUns() {
-        int qtdUns = numerosIguais(1);
-        
-        if (qtdUns > 1) {
-            vetorCartela[0] = qtdUns;
-        }
+        int qtdUns = this.numerosIguais(1);
+        vetorCartela[0] = (qtdUns * 1);
     }
 
     public int getUns() {
         return this.vetorCartela[0];
     }
 
-    // Quantidade de DOIS
+    // Quantidade de DOIS - 2
     public void setDois() {
-        int qtdDois = numerosIguais(2);
-
-        if (qtdDois > 1) {
-            vetorCartela[1] = qtdDois;
-        }
+        int qtdDois = this.numerosIguais(2);
+        vetorCartela[1] = (qtdDois * 2);
     }
     
     public int getDois() {
         return this.vetorCartela[1];
     }
 
-    // Quantidade de TRÊS
+    // Quantidade de TRÊS - 3
     public void setTres() {
-       int qtdTres = numerosIguais(3);
-
-        if (qtdTres > 1) {
-            vetorCartela[2] = qtdTres;
-        } 
+        int qtdTres = this.numerosIguais(3);
+        vetorCartela[2] = (qtdTres * 3);
     }
 
     public int getTres() {
         return this.vetorCartela[2];
     }
 
-    // Quantidade de QUATRO
+    // Quantidade de QUATRO - 4
     public void setQuatro() {
-       int qtdQuatro = numerosIguais(4);
-
-        if (qtdQuatro > 1) {
-            vetorCartela[3] = qtdQuatro;
-        }
+       int qtdQuatro = this.numerosIguais(4);
+        vetorCartela[3] = (qtdQuatro * 4);
     }
 
     public int getQuatro() {
         return this.vetorCartela[3];
     }
 
-    // Quantidade de CINCO
+    // Quantidade de CINCO - 5
     public void setCinco() {
-        int qtdCinco = numerosIguais(5);
-
-        if (qtdCinco > 1) {
-            vetorCartela[4] = qtdCinco;
-        }
+        int qtdCinco = this.numerosIguais(5);
+        vetorCartela[4] = (qtdCinco * 5);
     }
 
     public int getCinco() {
         return this.vetorCartela[4];
     }
 
-    // Quantidade de SEIS
+    // Quantidade de SEIS - 6
     public void setSeis() {
-        int qtdSeis = numerosIguais(6);
-
-        if (qtdSeis > 1) {
-            vetorCartela[5] = qtdSeis;
-        }
+        int qtdSeis = this.numerosIguais(6);
+        vetorCartela[5] = (qtdSeis * 6);
     }
 
     public int getSeis() {
         return this.vetorCartela[5];
     }
 
-    // Soma
+    // Soma - 7
     public void setSoma() {
         int valorSoma = (this.getUns() + this.getDois() + this.getTres() + this.getQuatro() + this.getCinco() + this.getSeis());
 
@@ -114,7 +105,7 @@ public class Cartela {
         return this.vetorCartela[6];
     }
 
-    // Bonus
+    // Bonus - 8
     public void setBonus() {
         if (this.getSoma() >= 63) {
             this.vetorCartela[7] = 35;
@@ -125,19 +116,15 @@ public class Cartela {
         return this.vetorCartela[7];
     }
 
-    // Trinca
+    // Trinca - 9
     public void setTrinca() {
-        boolean validTrinca = false;
         int total = 0;
-
-        for (int i = 0; i > 6; i++) {
-            if (vetorCartela[i] >= 3) {
-                validTrinca = true;
-            }
+        
+        for (int i = 0; i < 6; i++) {
             total += vetorCartela[i];
         }
 
-        if (validTrinca) {
+        if (vetorCartela[0] >= 3 || vetorCartela[1] >= 6 || vetorCartela[2] >= 9 || vetorCartela[3] >= 12 || vetorCartela[4] >= 15 || vetorCartela[5] >= 13) {
             this.vetorCartela[8] = total;
         }
     }
@@ -146,19 +133,15 @@ public class Cartela {
         return this.vetorCartela[8];
     }
 
-    // Quadra
+    // Quadra - 10
     public void setQuadra() {
-        boolean validQuadra = false;
         int total = 0;
 
-        for (int i = 0; i > 6; i++) {
-            if (vetorCartela[i] >= 3) {
-                validQuadra = true;
-            }
+        for (int i = 0; i < 6; i++) {
             total += vetorCartela[i];
         }
 
-        if (validQuadra) {
+        if (vetorCartela[0] >= 4 || vetorCartela[1] >= 8 || vetorCartela[2] >= 12 || vetorCartela[3] >= 16 || vetorCartela[4] >= 20 || vetorCartela[5] >= 24) {
             this.vetorCartela[9] = total;
         }
     }
@@ -167,14 +150,17 @@ public class Cartela {
         return this.vetorCartela[9];
     }
 
-    // Full House
-    public boolean validFullHouse() {
+    // Full House - 11
+    private boolean validFullHouse() {
         boolean validFullHouse = false, trinca = false;
-
-        for (int i = 0; i > 6; i++) {
-            if (vetorCartela[i] == 3 && trinca == false) {
+        
+        
+        for (int i = 0; i <= 5; i++) {
+            int qtdNum = this.numerosIguais(i + 1);
+            
+            if (qtdNum == 3 && trinca == false) {
                 trinca = true;
-            } else if (vetorCartela[i] == 2 && trinca) {
+            } else if (qtdNum == 2 && trinca) {
                 validFullHouse = true;
                 break;
             }
@@ -195,22 +181,14 @@ public class Cartela {
         return this.vetorCartela[10];
     }
 
-    // Sequência Pequena
-    public boolean validSeqPequena() {
+    // Sequência Pequena - 12
+    private boolean validSeqPequena() {
         boolean validSequencia = false;
-        int validacao = 0;
+        boolean condicao1 = (this.vetorCartela[0] == 1 && this.vetorCartela[1] == 2 && this.vetorCartela[2] == 3 && this.vetorCartela[3] == 4);
+        boolean condicao2 = (this.vetorCartela[1] == 2 && this.vetorCartela[2] == 3 && this.vetorCartela[3] == 4 && this.vetorCartela[4] == 5);
+        boolean condicao3 = (this.vetorCartela[2] == 3 && this.vetorCartela[3] == 4 && this.vetorCartela[4] == 5 && this.vetorCartela[5] == 6);
         
-        if (this.vetorCartela[0] == 1 || this.vetorCartela[5] == 1) {
-            validacao += 1;
-        } 
-
-        for (int i = 1; i < 5; i++) {
-            if (this.vetorCartela[i] == 1) {
-                validacao += 1;
-            } 
-        }
-        
-        if (validacao == 5) {
+        if (condicao1 || condicao2 || condicao3) {
             validSequencia = true;
         }
 
@@ -232,24 +210,19 @@ public class Cartela {
         return this.vetorCartela[11];
     }
 
-    // Sequência Grande
-    public boolean validSeqGrande() {
+    // Sequência Grande - 13
+    private boolean validSeqGrande() {
         boolean validSequencia = false;
-        int validacao = 0;
+        boolean condicao1 = (this.vetorCartela[0] == 1 || this.vetorCartela[5] == 6);
+        boolean condicao2 = (this.vetorCartela[1] == 2 && this.vetorCartela[2] == 3 && this.vetorCartela[3] == 4 && this.vetorCartela[4] == 5);
 
-        for (int i = 0; i < 6; i++) {
-            if (this.vetorCartela[i] == 1) {
-                validacao += 1;
-            } 
-        }
-        
-        if (validacao == 6) {
+        if (condicao1 && condicao2) {
             validSequencia = true;
-        }
-
+        } 
+        
         return validSequencia;
     }
-
+    
     public void setSeqGrande() {
         boolean validSeqGrande = this.validSeqGrande();
 
@@ -264,10 +237,10 @@ public class Cartela {
         return this.vetorCartela[12];
     }
 
-    // Chance ou Sorte
+    // Chance ou Sorte - 14
     public void setChance() {
         int totalChance = 0;
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i <= 4; i++) {
             totalChance += this.vetorDados[i];
         }
 
@@ -278,14 +251,11 @@ public class Cartela {
         return this.vetorCartela[13];
     }
 
-    // YAHTZEE
+    // YAHTZEE - 15
     public void setYahtzee() {
-        for (int i = 0; i < 6; i++) {
-            if (this.vetorCartela[i] == 6) {
-                this.contYahtzee += 1;
-                this.vetorCartela[14] = 50;
-                break;
-            }
+        if (this.vetorCartela[0] == 5 || this.vetorCartela[1] == 10 || this.vetorCartela[2] == 15 || this.vetorCartela[3] == 20 || this.vetorCartela[4] == 25 || this.vetorCartela[5] == 30) {
+            this.vetorCartela[14] = 50;
+            this.contYahtzee += 1;
         }
 
         if (this.contYahtzee > 1) {
@@ -297,11 +267,11 @@ public class Cartela {
         return this.vetorCartela[14];
     }
 
-    // Pontuação Total
+    // Pontuação Total - 16
     public void setPontosTot() {
         int total = 0;
 
-        for (int i = 0; i > 15; i++) {
+        for (int i = 0; i <= 15; i++) {
             total += this.vetorCartela[i];
         }
 
