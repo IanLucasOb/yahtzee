@@ -117,14 +117,25 @@ public class Cartela {
     }
 
     // Trinca - 9
+    public boolean validTrinca() {
+        boolean validTrinca =  false;
+
+        if (vetorCartela[0] >= 3 || vetorCartela[1] >= 6 || vetorCartela[2] >= 9 || vetorCartela[3] >= 12 || vetorCartela[4] >= 15 || vetorCartela[5] >= 13) {
+            validTrinca = true;
+        }
+
+        return validTrinca;
+    }
+
     public void setTrinca() {
         int total = 0;
+        boolean validTrinca = this.validTrinca();
         
         for (int i = 0; i < 6; i++) {
             total += vetorCartela[i];
         }
 
-        if (vetorCartela[0] >= 3 || vetorCartela[1] >= 6 || vetorCartela[2] >= 9 || vetorCartela[3] >= 12 || vetorCartela[4] >= 15 || vetorCartela[5] >= 13) {
+        if (validTrinca) {
             this.vetorCartela[8] = total;
         }
     }
@@ -143,6 +154,8 @@ public class Cartela {
 
         if (vetorCartela[0] >= 4 || vetorCartela[1] >= 8 || vetorCartela[2] >= 12 || vetorCartela[3] >= 16 || vetorCartela[4] >= 20 || vetorCartela[5] >= 24) {
             this.vetorCartela[9] = total;
+        } else {
+            this.vetorCartela[9] = 0;
         }
     }
 
@@ -152,15 +165,13 @@ public class Cartela {
 
     // Full House - 11
     private boolean validFullHouse() {
-        boolean validFullHouse = false, trinca = false;
-        
-        
+        boolean validFullHouse = false;
+        boolean trinca = this.validTrinca();
+          
         for (int i = 0; i <= 5; i++) {
             int qtdNum = this.numerosIguais(i + 1);
-
-            if (qtdNum == 3 && trinca == false) {
-                trinca = true;
-            } else if (qtdNum == 2 && trinca) {
+            
+            if (qtdNum == 2 && trinca) {
                 validFullHouse = true;
                 break;
             }
@@ -174,6 +185,8 @@ public class Cartela {
 
         if (validFullHouse) { 
             this.vetorCartela[10] = 25;
+        } else {
+            this.vetorCartela[10] = 0;
         }
     }
 
@@ -201,7 +214,7 @@ public class Cartela {
         if (validSeqPequena) {
             this.vetorCartela[11] = 30;
         } else {
-            this.vetorCartela[11] = 0; // condição possivelmente desnecessária
+            this.vetorCartela[11] = 0;
         }
         
     }
@@ -229,7 +242,7 @@ public class Cartela {
         if (validSeqGrande) {
             this.vetorCartela[12] = 40;
         } else {
-            this.vetorCartela[12] = 0; // condição possivelmente desnecessária
+            this.vetorCartela[12] = 0;
         }
     }
 
