@@ -157,7 +157,7 @@ public class Cartela {
         
         for (int i = 0; i <= 5; i++) {
             int qtdNum = this.numerosIguais(i + 1);
-            
+
             if (qtdNum == 3 && trinca == false) {
                 trinca = true;
             } else if (qtdNum == 2 && trinca) {
@@ -271,7 +271,7 @@ public class Cartela {
     public void setPontosTot() {
         int total = 0;
 
-        for (int i = 0; i <= 15; i++) {
+        for (int i = 0; i <= 14; i++) {
             total += this.vetorCartela[i];
         }
 
