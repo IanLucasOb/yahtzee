@@ -16,8 +16,12 @@ public class Jogador {
         return this.nome;
     }
 
-    public void setPontuacaoJogador(int indice, int valor){ // Atribui um valor ao indice indicado na lista de pontuação do jogador. 
+    public void setPontuacaoJogadorInd(int indice, int valor){ // Atribui um valor ao indice indicado na lista de pontuação do jogador. 
         this.pontuacaoJogador[indice] = valor;
+    }
+
+    public void setPontuacaoJogadorTot(int vetor[]){
+        this.pontuacaoJogador = vetor;
     }
     
     public int[] getPontuacaoJogador(){ // Pega a lista de pontuação do jogador.
