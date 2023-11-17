@@ -10,11 +10,22 @@ import java.util.List;
 public class GerenciadorArquivos {
     private String caminhoDoArquivoDeJogadores = "jogadores.txt";
     private String caminhoArquivoResultados = "resultados.txt";
-
     private List<String> vetorJogadores = new ArrayList<>();
 
     public void gravarJogador(String nome) {
-        try {   
+        this.lerArquivoJogadores();
+
+        if (nome.length() == 0) {
+            System.out.println("| Nome nao pode ser vazio! |");
+            return;
+        }
+        // verifica se o jogador já existe
+        if (this.vetorJogadores.contains(nome)) { // Percore a lista e verifica se há um valor igual.
+            System.out.println("| Jogador ja existe! |");
+            return;
+        }
+
+        try {
             File arquivo = new File(caminhoDoArquivoDeJogadores);
             // Cria o arquivo caso não exista
             if (!arquivo.exists()) {
@@ -24,13 +35,13 @@ public class GerenciadorArquivos {
             FileWriter escritorDeArquivo = new FileWriter(caminhoDoArquivoDeJogadores, true);
             BufferedWriter escritorBuffer = new BufferedWriter(escritorDeArquivo);
 
-            escritorBuffer.write(nome); 
+            escritorBuffer.write(nome);
             escritorBuffer.newLine();
             escritorBuffer.close();
 
-            System.out.println("Jogador cadastrado com sucesso.");
+            System.out.println(" | Jogador cadastrado com sucesso. |");
         } catch (IOException e) { // Verifica se há um erro;
-            System.out.println("Erro ao cadastrar jogador!");
+            System.out.println("| Erro ao cadastrar jogador! |");
             e.printStackTrace(); // Vai printar o erro;
         }
     }
@@ -47,12 +58,14 @@ public class GerenciadorArquivos {
 
             while (leitor.hasNextLine()) {
                 String data = leitor.nextLine();
-                this.vetorJogadores.add(data);
+                if (data.length() != 0) {
+                    this.vetorJogadores.add(data);
+                }
             }
 
             leitor.close();
         } catch (FileNotFoundException e) {
-            System.out.println("Ocorreu um erro ao ler os jogadores!");
+            System.out.println("| Ocorreu um erro ao ler o arquivo de jogadores! |");
             e.printStackTrace(); // Retorna a lista de jogadores;
         }
     }
@@ -79,7 +92,7 @@ public class GerenciadorArquivos {
                 }
                 // Fechando a stream
                 escritorBuffer.close();
-                System.out.println("Resultados gravados com sucesso!");
+                System.out.println("| Resultados gravados com sucesso! |");
             }
         } catch (IOException e) {
             // Trata exceções de IO, se ocorrerem
