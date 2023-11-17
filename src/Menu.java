@@ -65,11 +65,19 @@ public class Menu {
                 continue; // Continuar o loop caso a escolha for "SIM";
             } else {
                 System.out.println("| Salvando... |");
+                pausarPorUmS();
+                System.out.println("| Salvo com sucesso! |");
                 this.mostrarMenu(); // Voltar ao menu;
                 cadastrando = false; // Alterar o valor da variavel para falsa para quebrar o loop;
             }
         }
     }
 
-
+    private void pausarPorUmS(){
+        try{
+            Thread.sleep(1000); // Tempo de 1 segundo;
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }
+    }
 }
