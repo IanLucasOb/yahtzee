@@ -22,13 +22,17 @@ public class Menu {
                             + "| 3 - Ver histórico                                 |\n"
                             + "| 0 - Sair do jogo                                  |\n"
                             + "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
-            this.escolhaDoUsuario = scanner.nextInt(); // O nextInt(): não consumia a linha do (Enter);
-            scanner.nextLine(); // Consumir a quebra de linha pendente;
+            // O nextInt(): não consumia a linha do (Enter);
+            this.escolhaDoUsuario = scanner.nextInt();
+            // Consumir a quebra de linha pendente;
+            scanner.nextLine();
             switch (escolhaDoUsuario) {
 
                 case 1:
+                    // Aqui irá vir a função jogar;
+                    this.escolhaDoUsuario = 1;
+                    verificarSaida = 0;
                     break;
-                // Aqui irá vir a função jogar;
                 case 2:
                     this.cadastroDeJogador();
                     break;
@@ -38,6 +42,7 @@ public class Menu {
                 case 0:
                     System.out.println("| Saindo do jogo. Espero que tenha se divertido.| ");
                     verificarSaida = 0;
+                    this.escolhaDoUsuario = 0;
                     break;
                 default:
                     System.out.println("| Opção inválida.Tente novamente. |");
@@ -47,15 +52,17 @@ public class Menu {
     }
 
     public int getEscolhaDoUsuario() {
-        return this.escolhaDoUsuario; // Retorna a escolha do usuario;
+        // Retorna a escolha do usuario;
+        return this.escolhaDoUsuario;
     }
 
-    private void cadastroDeJogador() {
+    public void cadastroDeJogador() {
         boolean cadastrando = true;
         while (cadastrando) {
             System.out.println("| =-=-=-=-=- Digite o nome do jogador =-=-=-=-=- |");
             String nomeJogador = scanner.nextLine();
-            gerenciarArquivo.gravarJogador(nomeJogador); // Guardar os nomes no arquivo .txt;
+            // Guardar os nomes no arquivo .txt;
+            gerenciarArquivo.gravarJogador(nomeJogador);
 
             System.out.println(
                     "| Deseja adicionar outro jogador ? |\n"
@@ -63,23 +70,28 @@ public class Menu {
                             + "| 0 - NÃO                          |\n"
                             + "| =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- |");
             int escolhaJogador = scanner.nextInt();
-            scanner.nextLine(); // Consumir quebra de linha;
+            // Consumir quebra de linha;
+            scanner.nextLine();
 
             if (escolhaJogador == 1) {
-                continue; // Continuar o loop caso a escolha for "SIM";
+                // Continuar o loop caso a escolha for "SIM";
+                continue;
             } else {
                 System.out.println("| Salvando... |");
-                pausarPorUmS();
+                delay();
                 System.out.println("| Salvo com sucesso! |");
-                this.mostrarMenu(); // Voltar ao menu;
-                cadastrando = false; // Alterar o valor da variavel para falsa para quebrar o loop;
+                // Voltar ao menu;
+                // this.mostrarMenu();
+                // Alterar o valor da variavel para falsa para quebrar o loop;
+                cadastrando = false;
             }
         }
     }
 
-    private void pausarPorUmS() {
+    private void delay() {
         try {
-            Thread.sleep(1000); // Tempo de 1 segundo;
+            // Tempo de 1 segundo;
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
