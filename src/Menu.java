@@ -27,7 +27,6 @@ public class Menu {
             // Consumir a quebra de linha pendente;
             scanner.nextLine();
             switch (escolhaDoUsuario) {
-
                 case 1:
                     // Aqui irá vir a função jogar;
                     this.escolhaDoUsuario = 1;
@@ -102,8 +101,13 @@ public class Menu {
         vetorResultados.addAll(gerenciarArquivo.getResultados());
         System.out.println("| =-=-=-=-=- Histórico das partidas =-=-=-=-=- |");
         for(String resultados : vetorResultados){
-            System.out.println(resultados);
+            System.out.println("| " + resultados + " |");
         }
+        System.out.println("| =-=-=-=-=- Para voltar ao menu digite [1] =-=-=-=-=-");
+        int voltarAoMenu = scanner.nextInt();
+        scanner.nextLine(); // Consumir linha;
+        delay();
+        mostrarMenu();
     }
 
 }
