@@ -50,7 +50,7 @@ public class Menu {
             }
         }
     }
-
+    
     public int getEscolhaDoUsuario() {
         // Retorna a escolha do usuario;
         return this.escolhaDoUsuario;
