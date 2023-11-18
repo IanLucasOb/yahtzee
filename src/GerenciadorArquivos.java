@@ -11,6 +11,7 @@ public class GerenciadorArquivos {
     private String caminhoDoArquivoDeJogadores = "jogadores.txt";
     private String caminhoArquivoResultados = "resultados.txt";
     private List<String> vetorJogadores = new ArrayList<>();
+    private List<String> vetorResultados = new ArrayList<>();
 
     public void gravarJogador(String nome) {
         this.lerArquivoJogadores();
@@ -99,4 +100,29 @@ public class GerenciadorArquivos {
             e.printStackTrace();
         }
     }
+
+    public List<String> getResultados(){
+        this.lerResultados();;
+        return this.vetorResultados;
+    }
+
+    private void lerResultados(){
+        try{
+            File arquivo = new File(caminhoArquivoResultados);
+            Scanner leitor = new Scanner(arquivo);
+
+            while(leitor.hasNextLine()){   // Itera sobre cada linha do arquivo
+                String data = leitor.nextLine();
+                if(data.length() != 0){
+                    this.vetorResultados.add(data);
+                }
+            }
+
+            leitor.close();
+        }catch(FileNotFoundException e){
+            System.out.println("| Ocorreu um erro ao ler o arquivo Resultados! |");
+             e.printStackTrace();
+        }
+    }
+
 }

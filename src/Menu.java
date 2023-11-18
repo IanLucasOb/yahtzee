@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
@@ -23,20 +25,22 @@ public class Menu {
             this.escolhaDoUsuario = scanner.nextInt(); // O nextInt(): não consumia a linha do (Enter);
             scanner.nextLine(); // Consumir a quebra de linha pendente;
             switch (escolhaDoUsuario) {
+
                 case 1:
                     break;
                 // Aqui irá vir a função jogar;
                 case 2:
                     this.cadastroDeJogador();
                     break;
-                case 3:
+                case 3:    
+                    this.verHistorico();
                     break;
                 case 0:
-                    System.out.println("Saindo do jogo. Espero que tenha se divertido.");
+                    System.out.println("| Saindo do jogo. Espero que tenha se divertido.| ");
                     verificarSaida = 0;
                     break;
                 default:
-                    System.out.println("Opção inválida.Tente novamente.");
+                    System.out.println("| Opção inválida.Tente novamente. |");
                     continue;
             }
         }
@@ -54,7 +58,7 @@ public class Menu {
             gerenciarArquivo.gravarJogador(nomeJogador); // Guardar os nomes no arquivo .txt;
 
             System.out.println(
-                              "| Deseja adicionar outro jogador ? |\n"
+                    "| Deseja adicionar outro jogador ? |\n"
                             + "| 1 - SIM                          |\n"
                             + "| 0 - NÃO                          |\n"
                             + "| =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- |");
@@ -73,11 +77,21 @@ public class Menu {
         }
     }
 
-    private void pausarPorUmS(){
-        try{
+    private void pausarPorUmS() {
+        try {
             Thread.sleep(1000); // Tempo de 1 segundo;
-        }catch(InterruptedException e){
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
+
+    public void verHistorico() {
+        List<String> vetorResultados = new ArrayList<>();
+        vetorResultados.addAll(gerenciarArquivo.getResultados());
+        System.out.println("| =-=-=-=-=- Histórico das partidas =-=-=-=-=- |");
+        for(String resultados : vetorResultados){
+            System.out.println(resultados);
+        }
+    }
+
 }
