@@ -13,6 +13,22 @@ public class GerenciadorArquivos {
     private List<String> vetorJogadores = new ArrayList<>();
     private List<String> vetorResultados = new ArrayList<>();
 
+    public GerenciadorArquivos() {
+        try {
+            File jogadores = new File(caminhoDoArquivoDeJogadores);
+            // Cria o arquivo caso não exista
+            if (!jogadores.exists()) {
+                jogadores.createNewFile();
+            }
+            File resultados = new File(caminhoArquivoResultados);
+            if (!resultados.exists()) {
+                resultados.createNewFile();
+            }
+        } catch (Exception e) {
+            System.out.println("| Erro ao criar os arquivos |");
+        }
+    }
+
     public void gravarJogador(String nome) {
         this.lerArquivoJogadores();
 
@@ -27,12 +43,6 @@ public class GerenciadorArquivos {
         }
 
         try {
-            File arquivo = new File(caminhoDoArquivoDeJogadores);
-            // Cria o arquivo caso não exista
-            if (!arquivo.exists()) {
-                arquivo.createNewFile();
-                // throw new Error("O arquivo " + caminhoDoArquivoDeJogadores + "não existe!");
-            }
             FileWriter escritorDeArquivo = new FileWriter(caminhoDoArquivoDeJogadores, true);
             BufferedWriter escritorBuffer = new BufferedWriter(escritorDeArquivo);
 
@@ -75,13 +85,8 @@ public class GerenciadorArquivos {
     public void gravarResultados(String[] resultados) {
         try {
             if (resultados.length > 0) {
-                File arquivo = new File(caminhoArquivoResultados);
-                // Cria o arquivo caso não exista
-                if (!arquivo.exists()) {
-                    arquivo.createNewFile();
-                }
                 // Permite a escrita em um arquivo
-                FileWriter escritorDeArquivo = new FileWriter(arquivo, true);
+                FileWriter escritorDeArquivo = new FileWriter(caminhoArquivoResultados, true);
                 // Armazenar os dados em um buffer
                 BufferedWriter escritorBuffer = new BufferedWriter(escritorDeArquivo);
 
@@ -101,27 +106,33 @@ public class GerenciadorArquivos {
         }
     }
 
-    public List<String> getResultados(){
-        this.lerResultados();;
+    public List<String> getResultados() {
+        this.lerResultados();
+        ;
         return this.vetorResultados;
     }
 
-    private void lerResultados(){
-        try{
+    private void lerResultados() {
+        try {
             File arquivo = new File(caminhoArquivoResultados);
+            // Cria o arquivo caso não exista
+            if (!arquivo.exists()) {
+                System.out.println("| Nao há resultados cadastrados! |");
+                return;
+            }
             Scanner leitor = new Scanner(arquivo);
 
-            while(leitor.hasNextLine()){   // Itera sobre cada linha do arquivo
+            while (leitor.hasNextLine()) { // Itera sobre cada linha do arquivo
                 String data = leitor.nextLine();
-                if(data.length() != 0){
+                if (data.length() != 0) {
                     this.vetorResultados.add(data);
                 }
             }
 
             leitor.close();
-        }catch(FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             System.out.println("| Ocorreu um erro ao ler o arquivo Resultados! |");
-             e.printStackTrace();
+            e.printStackTrace();
         }
     }
 

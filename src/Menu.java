@@ -35,7 +35,7 @@ public class Menu {
                 case 2:
                     this.cadastroDeJogador();
                     break;
-                case 3:    
+                case 3:
                     this.verHistorico();
                     break;
                 case 0:
@@ -49,7 +49,7 @@ public class Menu {
             }
         }
     }
-    
+
     public int getEscolhaDoUsuario() {
         // Retorna a escolha do usuario;
         return this.escolhaDoUsuario;
@@ -99,9 +99,11 @@ public class Menu {
     public void verHistorico() {
         List<String> vetorResultados = new ArrayList<>();
         vetorResultados.addAll(gerenciarArquivo.getResultados());
-        System.out.println("| =-=-=-=-=- Histórico das partidas =-=-=-=-=- |");
-        for(String resultados : vetorResultados){
-            System.out.println("| " + resultados + " |");
+        if (vetorResultados.size() > 0) {
+            System.out.println("| =-=-=-=-=- Histórico das partidas =-=-=-=-=- |");
+            for (String resultados : vetorResultados) {
+                System.out.println("| " + resultados + " |");
+            }
         }
         System.out.println("| =-=-=-=-=- Para voltar ao menu digite [1] =-=-=-=-=-");
         int voltarAoMenu = scanner.nextInt();
