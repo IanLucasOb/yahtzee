@@ -32,7 +32,9 @@ public class Dado {
     }
 
     // reRola os dados de acordo com os Indexes dentro do vetor
-    public void reRolarDados(int vetorIndex) {
-        this.vetorDados[vetorIndex] = this.gerador.nextInt(6) + 1;
+    public void reRolarDados(int[] vetorIndex) {
+        for (int i = 0; i < vetorIndex.length; i++) {
+            this.vetorDados[vetorIndex[i]] = this.gerador.nextInt(6) + 1;
+        }
     }
 }

@@ -6,70 +6,54 @@ public class TestePigas {
 
     public static void main(String[] args) {
         Scanner teclado = new Scanner(System.in);
-        int escolha = 1;
 
+        dado.setVetor();
+        mostrarCartelaDados();
+        for (int cont = 2; cont > 0; cont--) {
 
-        while (escolha != 0) {
-            System.out.println("======================== Menu do Pigas ========================\n"
-                               + "[ 1 ] - Mostra 5 dados e a cartela de pontuação(13 vezes);\n"
-                               + "[ 2 ] - Rola 5 dados e permite alteração de valores;\n"
-                               + "[ 0 ] - Sair do Teste.\n"
-                               + "===============================================================");
-            System.out.print("| Digite sua escolha: ");
-            escolha = teclado.nextInt();
+            System.out.println("===============================================================");
+            System.out.println("| Obs: " + cont + " ReRolagens restantes");
+            System.out.print("| Deseja reRolar os dados? [S/N] ");
+            String resposta = teclado.next().split(" ")[0].toUpperCase();
 
-            switch (escolha) {
-                case 1:
-                    for (int i = 0; i <= 13; i++) {
-                        mostrarCartelaDados();
-                    }
-                    break;
+            if (resposta.equals("S")) {
+                System.out.print("|      Números equivalente dos indeices: [ 1°, 2°, 3°, 4°, 5°] "
+                                + "\n===============================================================" 
+                                + "\n| Digite os Indices que deseja reRolar: ");
 
-                case 2:
-                    mostrarCartelaDados();
-                    System.out.print("| Deseja reRolar os dados? [S/N] ");
-                    String resposta = teclado.next().split(" ")[0].toUpperCase();
+                                
+                // transforma a String digitada em um vetor com inteiros
+                teclado.nextLine();
+                String indexString[] = teclado.nextLine().strip().split(" ");
+                int indexDados[] = new int[indexString.length];
 
-                    if (resposta.equals("S")) {
-                        int indexes[] = new int[5];
-                        
-                        for (int i = 0; i < 5; i++) {
-                            System.out.println("| Digite os Indexes que deseja reRolar: ");
-                            indexes[i] = teclado.nextInt() - 1;
-                            dado.reRolarDados(indexes[i]);
-        
-                            System.out.print("| Continuar? [S/N] ");
-                            String continuar = teclado.next().split(" ")[0].toUpperCase();
-        
-                            if (continuar.equals("S")) {
-                                continue;
-                            } else {
-                                vetorDado = dado.getVetor();
-                                getDados();
-                                break;
-                            }
-                        }
-                    }
-                    break;
+                for (int i = 0; i < indexString.length; i++) {
+                    indexDados[i] = Integer.parseInt(indexString[i]) - 1;
+                }
+
+                dado.reRolarDados(indexDados);
+                mostrarCartelaDados();
+            } else {
+                break;
             }
-        }
+        }        
         teclado.close();
     }
 
-    public static void getDados() {
+    public static void mostrarCartelaDados() {
         System.out.print("| Dados -> ");
+        vetorDado = dado.getVetor();
+
         for (int index = 0; index < 5; index++) {
             if (index == 0) {
-                System.out.print("[ " + dado.getVetor()[index] + ", ");
-            } else if (index == 4) {
-                System.out.println("" + dado.getVetor()[index] + " ]");
+                System.out.print("[ " + vetorDado[index] + ", ");
+            } else if (index > 0 && index != 4) {
+                System.out.print("" + vetorDado[index] + ", ");
             } else {
-                System.out.print("" + dado.getVetor()[index] + ", ");
+                System.out.println("" + vetorDado[index] + " ]");
             }
         }
-    }
-    
-    public static void cartela() {
+
         Cartela cartelaUm = new Cartela();        
         
         cartelaUm.setVetorDados(vetorDado);
@@ -97,26 +81,8 @@ public class TestePigas {
             } else if (index > 0 && index < 15) {
                 System.out.print("" + cartelaUm.getCartela()[index] + ", ");
             } else {
-                System.out.print(cartelaUm.getCartela()[index] + " ]");
+                System.out.print(cartelaUm.getCartela()[index] + " ]\n");
             }       
         }
-        System.out.println("\n");
-    }
-
-    public static void mostrarCartelaDados() {
-        System.out.print("| Dados -> ");
-        dado.setVetor();
-        vetorDado = dado.getVetor();
-
-        for (int index = 0; index < 5; index++) {
-            if (index == 0) {
-                System.out.print("[ " + vetorDado[index] + ", ");
-            } else if (index > 0 && index != 4) {
-                System.out.print("" + vetorDado[index] + ", ");
-            } else {
-                System.out.println("" + vetorDado[index] + " ]");
-            }
-        }
-        cartela();
     }
 }
