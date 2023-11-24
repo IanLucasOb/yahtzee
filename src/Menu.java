@@ -6,10 +6,13 @@ public class Menu {
     private int escolhaDoUsuario;
     private Scanner scanner = new Scanner(System.in);
     private GerenciadorArquivos gerenciarArquivo = new GerenciadorArquivos();
+    private ArrayList<String> vetorResultados = new ArrayList<String>();
+    private ArrayList<String> vetorJogadores = new ArrayList<String>();
 
-    // public Menu() {
-    // this.scanner = new Scanner(System.in);
-    // }
+    public Menu() {
+        vetorResultados.addAll(gerenciarArquivo.getResultados());
+        vetorJogadores.addAll(gerenciarArquivo.getJogadores());
+    }
 
     public void mostrarMenu() {
         int verificarSaida = 1;
@@ -97,19 +100,50 @@ public class Menu {
     }
 
     public void verHistorico() {
-        List<String> vetorResultados = new ArrayList<>();
-        vetorResultados.addAll(gerenciarArquivo.getResultados());
+        // List<String> vetorResultados = new ArrayList<>();
+        // vetorResultados.addAll(gerenciarArquivo.getResultados());
+        boolean voltar = false;
         if (vetorResultados.size() > 0) {
             System.out.println("| =-=-=-=-=- Histórico das partidas =-=-=-=-=- |");
             for (String resultados : vetorResultados) {
                 System.out.println("| " + resultados + " |");
             }
         }
-        System.out.println("| =-=-=-=-=- Para voltar ao menu digite [1] =-=-=-=-=-");
-        int voltarAoMenu = scanner.nextInt();
-        scanner.nextLine(); // Consumir linha;
-        delay();
-        mostrarMenu();
+        while (!voltar) {
+            System.out.println("| =-=-=-=-=- Para voltar ao menu digite [1] =-=-=-=-=-");
+            int voltarAoMenu = scanner.nextInt();
+            scanner.nextLine(); // Consumir linha;
+            if (voltarAoMenu == 1) {
+                mostrarMenu();
+                voltar = true;
+            } else {
+                System.out.println("| Opção inválida! |");
+                continue;
+            }
+        }
+    }
+
+    public String escolhaDosJogadores() {
+        if (!gerenciarArquivo.getJogadores().equals(vetorJogadores)) {
+            vetorJogadores.clear(); 
+            vetorJogadores.addAll(gerenciarArquivo.getJogadores());
+        }
+
+        if (vetorJogadores.size() > 0) {
+            System.out.println("| =-=-=-=-=- Selecione os jogadores =-=-=-=-=- |");
+            for (int index = 0; index < vetorJogadores.size(); index++) {
+                String jogador = vetorJogadores.get(index);
+                System.out.println("| " + (index + 1) + " - " + jogador);
+            }
+            System.out.println("| Digite 'S' para SAIR e voltar ao menu inicial.    |");
+            System.out.println("| Digite os números dos jogadores SEPARADOS por ',' |");
+            String usuarioEntrada = scanner.nextLine();
+            return usuarioEntrada;
+        } else {
+            System.out.println("| Sem jogadores cadastrados! |");
+        }
+
+        return "";
     }
 
 }

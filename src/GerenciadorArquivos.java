@@ -10,24 +10,8 @@ import java.util.List;
 public class GerenciadorArquivos {
     private String caminhoDoArquivoDeJogadores = "jogadores.txt";
     private String caminhoArquivoResultados = "resultados.txt";
-    private List<String> vetorJogadores = new ArrayList<>();
+    private ArrayList<String> vetorJogadores = new ArrayList<>();
     private List<String> vetorResultados = new ArrayList<>();
-
-    public GerenciadorArquivos() {
-        try {
-            File jogadores = new File(caminhoDoArquivoDeJogadores);
-            // Cria o arquivo caso não exista
-            if (!jogadores.exists()) {
-                jogadores.createNewFile();
-            }
-            File resultados = new File(caminhoArquivoResultados);
-            if (!resultados.exists()) {
-                resultados.createNewFile();
-            }
-        } catch (Exception e) {
-            System.out.println("| Erro ao criar os arquivos |");
-        }
-    }
 
     public void gravarJogador(String nome) {
         this.lerArquivoJogadores();
@@ -43,6 +27,12 @@ public class GerenciadorArquivos {
         }
 
         try {
+            File arquivo = new File(caminhoDoArquivoDeJogadores);
+            // Cria o arquivo caso não exista
+            if (!arquivo.exists()) {
+                arquivo.createNewFile();
+                // throw new Error("O arquivo " + caminhoDoArquivoDeJogadores + "não existe!");
+            }
             FileWriter escritorDeArquivo = new FileWriter(caminhoDoArquivoDeJogadores, true);
             BufferedWriter escritorBuffer = new BufferedWriter(escritorDeArquivo);
 
@@ -57,12 +47,13 @@ public class GerenciadorArquivos {
         }
     }
 
-    public List<String> getJogadores() {
+    public ArrayList<String> getJogadores() {
         this.lerArquivoJogadores();
         return this.vetorJogadores; // Retorna a lista de jogadores;
     }
 
     private void lerArquivoJogadores() {
+        this.vetorJogadores.clear();
         try {
             File arquivo = new File(caminhoDoArquivoDeJogadores);
             Scanner leitor = new Scanner(arquivo);
@@ -85,8 +76,13 @@ public class GerenciadorArquivos {
     public void gravarResultados(String[] resultados) {
         try {
             if (resultados.length > 0) {
+                File arquivo = new File(caminhoArquivoResultados);
+                // Cria o arquivo caso não exista
+                if (!arquivo.exists()) {
+                    arquivo.createNewFile();
+                }
                 // Permite a escrita em um arquivo
-                FileWriter escritorDeArquivo = new FileWriter(caminhoArquivoResultados, true);
+                FileWriter escritorDeArquivo = new FileWriter(arquivo, true);
                 // Armazenar os dados em um buffer
                 BufferedWriter escritorBuffer = new BufferedWriter(escritorDeArquivo);
 
@@ -115,11 +111,6 @@ public class GerenciadorArquivos {
     private void lerResultados() {
         try {
             File arquivo = new File(caminhoArquivoResultados);
-            // Cria o arquivo caso não exista
-            if (!arquivo.exists()) {
-                System.out.println("| Nao há resultados cadastrados! |");
-                return;
-            }
             Scanner leitor = new Scanner(arquivo);
 
             while (leitor.hasNextLine()) { // Itera sobre cada linha do arquivo
