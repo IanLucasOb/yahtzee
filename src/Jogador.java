@@ -1,7 +1,6 @@
 public class Jogador {
     private String nome;
     private int pontuacaoJogador[] = new int[16];
-    private GerenciadorArquivos geranciador = new GerenciadorArquivos();
 
     public Jogador() {
         for (int i = 0; i < 16; i++) {
@@ -11,14 +10,17 @@ public class Jogador {
 
     public void setNome(String nome) { // Atribui um nome ao jogador e o cadastra permanentemente.
         this.nome = nome;
-        geranciador.gravarJogador(nome);
     }
 
     public String getNome() { // Pega o nome do jogador.
         return this.nome;
     }
 
-    public void setPontuacaoJogador(int indice, int valor) { // Atribui um valor ao indice indicado na lista de pontuação do jogador.
+    /*
+     * Atribui um valor ao indice indicado na lista de
+     * pontuação do jogador.
+     */
+    public void setPontuacaoJogador(int indice, int valor) {
         this.pontuacaoJogador[indice] = valor;
     }
 
