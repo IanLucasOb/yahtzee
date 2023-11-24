@@ -1,5 +1,6 @@
 public class Cartela {
     private int vetorCartela[] = new int[16];
+    // private int vetorTempory[] = new int[16]; // ainda pensando na utilidade de um vetor temporario
     private int contYahtzee = 0;
     private int vetorDados[] = new int[5];
 
@@ -19,6 +20,78 @@ public class Cartela {
     // Pega a cartela completa
     public int[] getCartela() {
         return vetorCartela;
+    }
+
+    // seta a cartela completa
+    public void setCartela(int indice) { //  utilizado ára testar em um código separado
+        switch (indice) {
+            case 0:
+                this.setUns();
+                break;
+        
+            case 1:            
+                this.setDois();
+                break;
+                
+            case 2:
+                this.setTres();
+                break;
+
+            case 3:
+                this.setQuatro();
+                break;
+
+            case 4:
+                this.setCinco();
+                break;
+
+            case 5:
+                this.setSeis();
+                break;
+                
+            case 6:
+                this.setSoma();
+                break;
+                
+            case 7:
+                this.setBonus();
+                break;
+                
+            case 8:
+                this.setTrinca();
+                break;
+                
+            case 9:
+                this.setQuadra();
+                break;
+                
+            case 10:
+                this.setFullHouse();
+                break;
+                
+            case 11:
+                this.setSeqPequena();
+                break;
+                
+            case 12:
+                this.setSeqGrande();
+                break;
+                
+            case 13:
+                this.setChance();
+                break;
+                
+            case 14:
+                this.setYahtzee();
+                break;
+            
+            case 15:
+                this.setPontosTot();
+                break;
+    
+            default:
+                break;
+        }
     }
 
     // Função de aproveitamento de código para as 6 primeiras categorias.

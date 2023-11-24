@@ -5,6 +5,7 @@ public class Dado {
 
     private int vetorDados[] = new int[5];
     Random gerador = new Random();
+    private int vetorIndex[];
 
     // public Dado() {
     //     this.rolar();
@@ -31,10 +32,57 @@ public class Dado {
         return this.vetorDados;
     }
 
-    // reRola os dados de acordo com os Indexes dentro do vetor
-    public void reRolarDados(int[] vetorIndex) {
-        for (int i = 0; i < vetorIndex.length; i++) {
-            this.vetorDados[vetorIndex[i]] = this.gerador.nextInt(6) + 1;
+    // valida a reRolagem de dados
+    public boolean validReRolagem(String[] vetorIndexString) {
+        boolean indexRepet = false, validReRolagem = false;
+        this.vetorIndex = new int[vetorIndexString.length];
+
+        for (int teste = 0; teste < vetorIndexString.length; teste++) {
+            try {
+                vetorIndex[teste] = Integer.parseInt(vetorIndexString[teste]) - 1;
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+                // return false;
+            }
         }
+
+        for (int num = 0; num < vetorIndex.length; num++) {
+            System.out.println(vetorIndex.length);
+            if (vetorIndex[num] > 6 || vetorIndex[num] < 0) {
+                System.out.println("| Erro: Dados informados fora da lista esperada e permitida.");
+                break;
+            } else if (vetorIndex.length > 1) {
+                for (int num2 = 0; num2 < 4; num2++) {
+                    if (num == num2) {
+                        continue;
+                    } else if (vetorIndex[num] == vetorIndex[num2]) {
+                        indexRepet = false;
+                        System.out.println("| Erro: Dados informados repetidamente.");
+                        break;
+                    } else {
+                        validReRolagem = true;
+                    }
+                    if (indexRepet == false) {
+                    break;
+                    }
+                }
+            } else {
+                validReRolagem = true; 
+            }
+        }
+        return validReRolagem;
+    }
+
+    // reRola os dados de acordo com os Indexes dentro do vetor
+    public boolean reRolarDados(String vetorIndexString[]) {
+        boolean validReRolagem = new Dado().validReRolagem(vetorIndexString);
+
+        if (validReRolagem) {
+            for (int i = 0; i < this.vetorIndex.length; i++) {
+                this.vetorDados[vetorIndex[i]] = this.gerador.nextInt(6) + 1;
+            }                 
+        }
+
+        return validReRolagem;
     }
 }
