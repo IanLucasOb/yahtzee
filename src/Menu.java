@@ -100,19 +100,28 @@ public class Menu {
     }
 
     public void verHistorico() {
-        // List<String> vetorResultados = new ArrayList<>();
-        // vetorResultados.addAll(gerenciarArquivo.getResultados());
-        boolean voltar = false;
+        if (!gerenciarArquivo.getResultados().equals(vetorResultados)) {
+            vetorResultados.clear();
+            vetorResultados.addAll(gerenciarArquivo.getResultados());
+        }
+
         if (vetorResultados.size() > 0) {
             System.out.println("| =-=-=-=-=- Histórico das partidas =-=-=-=-=- |");
             for (String resultados : vetorResultados) {
                 System.out.println("| " + resultados + " |");
             }
+        } else {
+            System.out.println("| Não há histórico de partidas! |");
+            mostrarMenu();
+            return;
         }
+
+        boolean voltar = false;
         while (!voltar) {
             System.out.println("| =-=-=-=-=- Para voltar ao menu digite [1] =-=-=-=-=-");
             int voltarAoMenu = scanner.nextInt();
-            scanner.nextLine(); // Consumir linha;
+            // Consumir linha;
+            scanner.nextLine();
             if (voltarAoMenu == 1) {
                 mostrarMenu();
                 voltar = true;
@@ -125,7 +134,7 @@ public class Menu {
 
     public String escolhaDosJogadores() {
         if (!gerenciarArquivo.getJogadores().equals(vetorJogadores)) {
-            vetorJogadores.clear(); 
+            vetorJogadores.clear();
             vetorJogadores.addAll(gerenciarArquivo.getJogadores());
         }
 
