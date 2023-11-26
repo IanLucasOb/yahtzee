@@ -24,6 +24,13 @@ public class Jogador {
         this.pontuacaoJogador[indice] = valor;
     }
 
+    /*
+     * Atribui o valor de uma cartela inteira a pontuação do jogador
+     */
+    public void setPontuacao(int[] valor) {
+        this.pontuacaoJogador = valor;
+    }
+
     public int[] getPontuacaoJogador() { // Pega a lista de pontuação do jogador.
         return this.pontuacaoJogador;
     }
