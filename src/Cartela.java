@@ -1,6 +1,7 @@
 public class Cartela {
     private int vetorCartela[] = new int[16];
-    // private int vetorTempory[] = new int[16]; // ainda pensando na utilidade de um vetor temporario
+    // private int vetorTempory[] = new int[16]; // ainda pensando na utilidade de
+    // um vetor temporario
     private int contYahtzee = 0;
     private int vetorDados[] = new int[5];
 
@@ -23,16 +24,16 @@ public class Cartela {
     }
 
     // seta a cartela completa
-    public void setCartela(int indice) { //  utilizado ára testar em um código separado
+    public void setCartela(int indice) { // utilizado ára testar em um código separado
         switch (indice) {
             case 0:
                 this.setUns();
                 break;
-        
-            case 1:            
+
+            case 1:
                 this.setDois();
                 break;
-                
+
             case 2:
                 this.setTres();
                 break;
@@ -48,47 +49,47 @@ public class Cartela {
             case 5:
                 this.setSeis();
                 break;
-                
+
             case 6:
                 this.setSoma();
                 break;
-                
+
             case 7:
                 this.setBonus();
                 break;
-                
+
             case 8:
                 this.setTrinca();
                 break;
-                
+
             case 9:
                 this.setQuadra();
                 break;
-                
+
             case 10:
                 this.setFullHouse();
                 break;
-                
+
             case 11:
                 this.setSeqPequena();
                 break;
-                
+
             case 12:
                 this.setSeqGrande();
                 break;
-                
+
             case 13:
                 this.setChance();
                 break;
-                
+
             case 14:
                 this.setYahtzee();
                 break;
-            
+
             case 15:
                 this.setPontosTot();
                 break;
-    
+
             default:
                 break;
         }
@@ -97,7 +98,7 @@ public class Cartela {
     // Função de aproveitamento de código para as 6 primeiras categorias.
     private int numerosIguais(int numFiltro) {
         int contNumIguais = 0;
-    
+
         for (int i = 0; i <= 4; i++) {
             if (this.vetorDados[i] == numFiltro) {
                 contNumIguais += 1;
@@ -122,7 +123,7 @@ public class Cartela {
         int qtdDois = this.numerosIguais(2);
         vetorCartela[1] = (qtdDois * 2);
     }
-    
+
     public int getDois() {
         return this.vetorCartela[1];
     }
@@ -139,7 +140,7 @@ public class Cartela {
 
     // Quantidade de QUATRO - 4
     public void setQuatro() {
-       int qtdQuatro = this.numerosIguais(4);
+        int qtdQuatro = this.numerosIguais(4);
         vetorCartela[3] = (qtdQuatro * 4);
     }
 
@@ -169,7 +170,8 @@ public class Cartela {
 
     // Soma - 7
     public void setSoma() {
-        int valorSoma = (this.getUns() + this.getDois() + this.getTres() + this.getQuatro() + this.getCinco() + this.getSeis());
+        int valorSoma = (this.getUns() + this.getDois() + this.getTres() + this.getQuatro() + this.getCinco()
+                + this.getSeis());
 
         vetorCartela[6] = valorSoma;
     }
@@ -191,9 +193,10 @@ public class Cartela {
 
     // Trinca - 9
     public boolean validTrinca() {
-        boolean validTrinca =  false;
+        boolean validTrinca = false;
 
-        if (vetorCartela[0] >= 3 || vetorCartela[1] >= 6 || vetorCartela[2] >= 9 || vetorCartela[3] >= 12 || vetorCartela[4] >= 15 || vetorCartela[5] >= 13) {
+        if (vetorCartela[0] >= 3 || vetorCartela[1] >= 6 || vetorCartela[2] >= 9 || vetorCartela[3] >= 12
+                || vetorCartela[4] >= 15 || vetorCartela[5] >= 13) {
             validTrinca = true;
         }
 
@@ -203,7 +206,7 @@ public class Cartela {
     public void setTrinca() {
         int total = 0;
         boolean validTrinca = this.validTrinca();
-        
+
         for (int i = 0; i < 6; i++) {
             total += vetorCartela[i];
         }
@@ -225,7 +228,8 @@ public class Cartela {
             total += vetorCartela[i];
         }
 
-        if (vetorCartela[0] >= 4 || vetorCartela[1] >= 8 || vetorCartela[2] >= 12 || vetorCartela[3] >= 16 || vetorCartela[4] >= 20 || vetorCartela[5] >= 24) {
+        if (vetorCartela[0] >= 4 || vetorCartela[1] >= 8 || vetorCartela[2] >= 12 || vetorCartela[3] >= 16
+                || vetorCartela[4] >= 20 || vetorCartela[5] >= 24) {
             this.vetorCartela[9] = total;
         } else {
             this.vetorCartela[9] = 0;
@@ -240,10 +244,10 @@ public class Cartela {
     private boolean validFullHouse() {
         boolean validFullHouse = false;
         boolean trinca = this.validTrinca();
-          
+
         for (int i = 0; i <= 5; i++) {
             int qtdNum = this.numerosIguais(i + 1);
-            
+
             if (qtdNum == 2 && trinca) {
                 validFullHouse = true;
                 break;
@@ -256,7 +260,7 @@ public class Cartela {
     public void setFullHouse() {
         boolean validFullHouse = this.validFullHouse();
 
-        if (validFullHouse) { 
+        if (validFullHouse) {
             this.vetorCartela[10] = 25;
         } else {
             this.vetorCartela[10] = 0;
@@ -270,10 +274,13 @@ public class Cartela {
     // Sequência Pequena - 12
     private boolean validSeqPequena() {
         boolean validSequencia = false;
-        boolean condicao1 = (this.vetorCartela[0] == 1 && this.vetorCartela[1] == 2 && this.vetorCartela[2] == 3 && this.vetorCartela[3] == 4);
-        boolean condicao2 = (this.vetorCartela[1] == 2 && this.vetorCartela[2] == 3 && this.vetorCartela[3] == 4 && this.vetorCartela[4] == 5);
-        boolean condicao3 = (this.vetorCartela[2] == 3 && this.vetorCartela[3] == 4 && this.vetorCartela[4] == 5 && this.vetorCartela[5] == 6);
-        
+        boolean condicao1 = (this.vetorCartela[0] == 1 && this.vetorCartela[1] == 2 && this.vetorCartela[2] == 3
+                && this.vetorCartela[3] == 4);
+        boolean condicao2 = (this.vetorCartela[1] == 2 && this.vetorCartela[2] == 3 && this.vetorCartela[3] == 4
+                && this.vetorCartela[4] == 5);
+        boolean condicao3 = (this.vetorCartela[2] == 3 && this.vetorCartela[3] == 4 && this.vetorCartela[4] == 5
+                && this.vetorCartela[5] == 6);
+
         if (condicao1 || condicao2 || condicao3) {
             validSequencia = true;
         }
@@ -289,7 +296,7 @@ public class Cartela {
         } else {
             this.vetorCartela[11] = 0;
         }
-        
+
     }
 
     public int getSeqPequena() {
@@ -300,15 +307,16 @@ public class Cartela {
     private boolean validSeqGrande() {
         boolean validSequencia = false;
         boolean condicao1 = (this.vetorCartela[0] == 1 || this.vetorCartela[5] == 6);
-        boolean condicao2 = (this.vetorCartela[1] == 2 && this.vetorCartela[2] == 3 && this.vetorCartela[3] == 4 && this.vetorCartela[4] == 5);
+        boolean condicao2 = (this.vetorCartela[1] == 2 && this.vetorCartela[2] == 3 && this.vetorCartela[3] == 4
+                && this.vetorCartela[4] == 5);
 
         if (condicao1 && condicao2) {
             validSequencia = true;
-        } 
-        
+        }
+
         return validSequencia;
     }
-    
+
     public void setSeqGrande() {
         boolean validSeqGrande = this.validSeqGrande();
 
@@ -339,7 +347,8 @@ public class Cartela {
 
     // YAHTZEE - 15
     public void setYahtzee() {
-        if (this.vetorCartela[0] == 5 || this.vetorCartela[1] == 10 || this.vetorCartela[2] == 15 || this.vetorCartela[3] == 20 || this.vetorCartela[4] == 25 || this.vetorCartela[5] == 30) {
+        if (this.vetorCartela[0] == 5 || this.vetorCartela[1] == 10 || this.vetorCartela[2] == 15
+                || this.vetorCartela[3] == 20 || this.vetorCartela[4] == 25 || this.vetorCartela[5] == 30) {
             this.vetorCartela[14] = 50;
             this.contYahtzee += 1;
         }
@@ -355,6 +364,7 @@ public class Cartela {
 
     // Pontuação Total - 16
     public void setPontosTot() {
+        System.out.println("passou aqui");
         int total = 0;
 
         for (int i = 0; i <= 14; i++) {
@@ -366,5 +376,20 @@ public class Cartela {
 
     public int getPontosTot() {
         return this.vetorCartela[15];
+    }
+
+    /*
+     * Retorna uma pontuação específica
+     * com base no índice recebido
+     */
+    public int getPontuacao(int indice) {
+        return this.vetorCartela[indice];
+    }
+
+    /*
+     * Adiciona a pontuação que o jogador selecionou à pontuação total
+     */
+    public void setPontuacao(int indice) {
+        this.vetorCartela[15] += this.getPontuacao(indice);
     }
 }
