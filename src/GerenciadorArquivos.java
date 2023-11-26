@@ -73,9 +73,9 @@ public class GerenciadorArquivos {
     }
 
     // Grava os resultados de cada jogador e sua cartela
-    public void gravarResultados(String[] resultados) {
+    public void gravarResultados(String resultado) {
         try {
-            if (resultados.length > 0) {
+            if (resultado.length() > 0) {
                 File arquivo = new File(caminhoArquivoResultados);
                 // Cria o arquivo caso não exista
                 if (!arquivo.exists()) {
@@ -86,12 +86,12 @@ public class GerenciadorArquivos {
                 // Armazenar os dados em um buffer
                 BufferedWriter escritorBuffer = new BufferedWriter(escritorDeArquivo);
 
-                for (String string : resultados) {
-                    // Escreve a string no arquivo
-                    escritorBuffer.write(string);
-                    // Nova linha
-                    escritorBuffer.newLine();
-                }
+                // for (String string : resultados) {
+                // Escreve a string no arquivo
+                escritorBuffer.write(resultado);
+                // Nova linha
+                escritorBuffer.newLine();
+                // }
                 // Fechando a stream
                 escritorBuffer.close();
                 System.out.println("| Resultados gravados com sucesso! |");
@@ -104,11 +104,11 @@ public class GerenciadorArquivos {
 
     public List<String> getResultados() {
         this.lerResultados();
-        ;
         return this.vetorResultados;
     }
 
     private void lerResultados() {
+        this.vetorResultados.clear();
         try {
             File arquivo = new File(caminhoArquivoResultados);
             Scanner leitor = new Scanner(arquivo);

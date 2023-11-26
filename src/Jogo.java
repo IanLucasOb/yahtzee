@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -88,6 +89,12 @@ public class Jogo {
                             categoria = entrada.nextInt();
                         }
 
+                        while (cartela.getCartela()[categoria - 1] == 0) {
+                            System.out.println("| Está categoria não pode ser marcada pois não há pontuação!");
+                            System.out.println("Digite outra categoria: ");
+                            categoria = entrada.nextInt();
+                        }
+
                         while (cartela.categoriaJaSelecionada(categoria - 1)) {
                             System.out.println("| Está categoria já foi selecionada!");
                             System.out.println("Digite outra categoria: ");
@@ -117,6 +124,7 @@ public class Jogo {
 
                 int maiorPontuacao = 0;
                 String nomeVencedor = "";
+                String resultado = "";
 
                 // Encontrar a maior pontuação e o nome do jogador que a fez
                 for (Jogador jogador : jogadores) {
@@ -124,8 +132,10 @@ public class Jogo {
                         maiorPontuacao = jogador.getPontuacaoJogador()[15];
                         nomeVencedor = jogador.getNome();
                     }
+                    resultado += jogador.getNome() + ": " + jogador.getPontuacaoJogador()[15] + " X ";
                 }
 
+                gerenciadorArquivos.gravarResultados(dataAtual() + " - " + resultado);
                 System.out.println("\n");
                 System.out.println("Vencedor: " + nomeVencedor);
                 System.out.println("Pontuação Total: " + maiorPontuacao);
@@ -237,5 +247,10 @@ public class Jogo {
                 System.out.println("" + dados[index] + " ]");
             }
         }
+    }
+
+    public static String dataAtual() {
+        String[] formatarData = LocalDate.now().toString().split("T")[0].split("-");
+        return formatarData[2] + "/" + formatarData[1] + "/" + formatarData[0];
     }
 }
