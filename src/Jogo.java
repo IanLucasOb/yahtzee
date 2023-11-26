@@ -85,9 +85,16 @@ public class Jogo {
                         // Validar se a categoria é válida
                         while (categoria > 15 || categoria < 1) {
                             System.out.println("Digite uma categoria válida:");
+                            categoria = entrada.nextInt();
                         }
 
-                        // Altera a pontuação total com base na opçao selecionada pelo jogador
+                        while (cartela.categoriaJaSelecionada(categoria - 1)) {
+                            System.out.println("| Está categoria já foi selecionada!");
+                            System.out.println("Digite outra categoria: ");
+                            categoria = entrada.nextInt();
+                        }
+
+                        cartela.setCategoriaSelecionada(categoria - 1);
                         cartela.setPontuacao(categoria - 1);
                         System.out.println("Pontuação Total: " + cartela.getPontosTot());
                         System.out.println("\n\n\n");
@@ -198,13 +205,19 @@ public class Jogo {
 
             if (tamanhoString == 1) {
                 System.out.println(
-                        "  [  " + cartela.getCartela()[index] + " ]  -  " + (index + 1) + ". " + casaCartela[index]);
+                        "  [  " + cartela.getCartela()[index]
+                                + " ]  -  " + (index + 1) + ". " + casaCartela[index]
+                                + (cartela.categoriaJaSelecionada(index) ? " [X]" : ""));
             } else if (tamanhoString == 2) {
                 System.out.println(
-                        "  [ " + cartela.getCartela()[index] + " ]  -  " + (index + 1) + ". " + casaCartela[index]);
+                        "  [ " + cartela.getCartela()[index]
+                                + " ]  -  " + (index + 1) + ". " + casaCartela[index]
+                                + (cartela.categoriaJaSelecionada(index) ? " [X]" : ""));
             } else {
                 System.out.println(
-                        "  [ " + cartela.getCartela()[index] + " ]  -  " + (index + 1) + ". " + casaCartela[index]);
+                        "  [ " + cartela.getCartela()[index]
+                                + " ]  -  " + (index + 1) + ". " + casaCartela[index]
+                                + (cartela.categoriaJaSelecionada(index) ? " [X]" : ""));
             }
         }
         System.out.println("===============================================================");

@@ -1,5 +1,6 @@
 public class Cartela {
     private int vetorCartela[] = new int[16];
+    private int categoriasSelecionadas[] = new int[16];
     // private int vetorTempory[] = new int[16]; // ainda pensando na utilidade de
     // um vetor temporario
     private int contYahtzee = 0;
@@ -106,6 +107,14 @@ public class Cartela {
         }
 
         return contNumIguais;
+    }
+
+    public void setCategoriaSelecionada(int indexCategoria) {
+        this.categoriasSelecionadas[indexCategoria] = 1;
+    }
+
+    public boolean categoriaJaSelecionada(int indexCategoria) {
+        return this.categoriasSelecionadas[indexCategoria] == 1;
     }
 
     // Quantidade de UM - 1
