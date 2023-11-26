@@ -139,6 +139,8 @@ public class Jogo {
                 System.out.println("\n");
                 System.out.println("Vencedor: " + nomeVencedor);
                 System.out.println("Pontuação Total: " + maiorPontuacao);
+                System.out.println("Até a proxima pártida!\n");
+                sairDaPartida();
             }
 
         }
