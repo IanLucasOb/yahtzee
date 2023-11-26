@@ -1,21 +1,23 @@
-## Getting Started
+## Sobre o projeto
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+Este projeto é uma versão do jogo [Yahtzee](https://pt.wikipedia.org/wiki/Yahtzee) feito 100% em java. O projeto foi proposto por um professor da faculdade de Sistemas de Informação do segundo período para ser feito como um trabalho em grupo.
 
-## Folder Structure
+## Começando
 
-The workspace contains two folders by default, where:
+Clone este projeto e execute a classe Jogo que contém o método main.
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+## Estrura de pastas
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+O projeto contém duas pastas padrão, onde:
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+- `src`: a pasta que contém todo código fonte
+- `lib`: ta pasta que contém dependencias
 
-## Dependency Management
+Os arquivos de saída compilados serão gerados na pasta `bin` por padrão.
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+## Gerenciamento de Dependências
+
+O `JAVA PROJECTS` permite que você gerencie suas dependências. Mais detalhes podem ser encontrados [aqui](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
 
 ## Integrantes:
 
