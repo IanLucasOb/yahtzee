@@ -26,9 +26,6 @@ public class Jogo {
             jogadoresEscolhidos.clear();
             String escolhaUsuario = menu.escolhaDosJogadores();
 
-            if (usuarioSaiuOuNaoDigitou(escolhaUsuario)) {
-                sairDaPartida();
-            }
             jogadoresEscolhidos.addAll(pegarIndexDosJogadores(escolhaUsuario));
 
             if (menosDeDoisJogadores(jogadoresEscolhidos.size())) {
@@ -37,7 +34,6 @@ public class Jogo {
             }
 
             if (rodada < 13) {
-                System.out.println("| -=-=-=-=-= YATZHEE =-=-=-=-=|");
                 // ? Buscar jogadores que o usuário selecionou
                 // Pegar o que o menu retornou
                 List<Jogador> jogadores = new ArrayList<>();
@@ -46,18 +42,24 @@ public class Jogo {
                 if (jogadores.size() == 0) {
                     // Criando jogadores e as cartelas
                     for (int indice : jogadoresEscolhidos) {
-
-                        Jogador jogador = new Jogador();
-                        // Com base no índice de cada jogador que o usuário selecionou
-                        // busca o nome dele na lista de jogadores cadastrados
-                        String nome = jogadoresCadastrados.get(indice);
-                        jogador.setNome(nome);
-                        jogadores.add(jogador);
-
-                        // Cartela do jogador -> a chave é o índice
-                        Cartela cartela = new Cartela();
-                        cartelas.add(cartela);
+                        if(indice <= jogadoresEscolhidos.size()) {
+                            Jogador jogador = new Jogador();
+                            // Com base no índice de cada jogador que o usuário selecionou
+                            // busca o nome dele na lista de jogadores cadastrados
+                            String nome = jogadoresCadastrados.get(indice);
+                            jogador.setNome(nome);
+                            jogadores.add(jogador);
+    
+                            // Cartela do jogador -> a chave é o índice
+                            Cartela cartela = new Cartela();
+                            cartelas.add(cartela);
+                        } else {
+                            System.out.println("\n| Números dos jogadores inválidos! Escolha somente os números dos jogadores que contém na lista.\n");
+                            sairDaPartida();
+                            break;
+                        }
                     }
+                    System.out.println("| -=-=-=-=-= YATZHEE =-=-=-=-=|");
                 }
 
                 for (int i = 0; i < qtdRodadas; i++) {
