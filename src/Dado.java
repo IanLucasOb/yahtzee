@@ -34,52 +34,58 @@ public class Dado {
 
     // valida a reRolagem de dados
     public boolean validReRolagem(String[] vetorIndexString) {
-        boolean indexRepet = false, validReRolagem = false;
+        boolean indexRepet = false, validReRolagem = false, foraDoLimite = false, naoEhNumero = false;
         this.vetorIndex = new int[vetorIndexString.length];
 
         for (int teste = 0; teste < vetorIndexString.length; teste++) {
             try {
-                vetorIndex[teste] = Integer.parseInt(vetorIndexString[teste]) - 1;
+                this.vetorIndex[teste] = Integer.parseInt(vetorIndexString[teste]) - 1;
             } catch (NumberFormatException e) {
-                e.printStackTrace();
-                // return false;
+                // e.printStackTrace();
+                System.out.println("| Erro: Os dados informados, não são números.");
+                naoEhNumero = true;
+                break;
             }
         }
 
-        for (int num = 0; num < vetorIndex.length; num++) {
-            System.out.println(vetorIndex.length);
-            if (vetorIndex[num] > 6 || vetorIndex[num] < 0) {
-                System.out.println("| Erro: Dados informados fora da lista esperada e permitida.");
-                break;
-            } else if (vetorIndex.length > 1) {
-                for (int num2 = 0; num2 < 4; num2++) {
-                    if (num == num2) {
-                        continue;
-                    } else if (vetorIndex[num] == vetorIndex[num2]) {
-                        indexRepet = false;
+        if (vetorIndexString.length < 6 && !naoEhNumero) {
+            for (int num = 0; num < this.vetorIndex.length; num++) {
+                if (this.vetorIndex[num] > 6 || this.vetorIndex[num] < 0) {
+                    System.out.println("| Erro: Dados informados fora da lista esperada e permitida.");
+                    foraDoLimite = true;
+                    break;
+
+                } else if (this.vetorIndex.length > 1) {
+                    for (int k = num+1; k < this.vetorIndex.length; k++) {
+                        if (k != num && this.vetorIndex[k] == this.vetorIndex[num]) {
+                            indexRepet = true;
+                            break;
+                        }
+                    }
+    
+                    if (indexRepet == true) {
                         System.out.println("| Erro: Dados informados repetidamente.");
                         break;
                     } else {
                         validReRolagem = true;
                     }
-                    if (indexRepet == false) {
-                    break;
-                    }
+
+                } else if (!naoEhNumero){
+                    validReRolagem = true; 
                 }
-            } else {
-                validReRolagem = true; 
             }
+
+        } else if (naoEhNumero) {
+            validReRolagem = false;
+
+        } else {
+            System.out.println("| Erro: Quantidade de dados informados maior que 5.");
         }
-        return validReRolagem;
-    }
 
-    // reRola os dados de acordo com os Indexes dentro do vetor
-    public boolean reRolarDados(String vetorIndexString[]) {
-        boolean validReRolagem = new Dado().validReRolagem(vetorIndexString);
-
-        if (validReRolagem) {
+        // reRola os dados de acordo com os Indexes dentro do Vetor
+        if (!foraDoLimite && !indexRepet && !naoEhNumero && validReRolagem) {
             for (int i = 0; i < this.vetorIndex.length; i++) {
-                this.vetorDados[vetorIndex[i]] = this.gerador.nextInt(6) + 1;
+                this.vetorDados[this.vetorIndex[i]] = this.gerador.nextInt(6) + 1;
             }                 
         }
 

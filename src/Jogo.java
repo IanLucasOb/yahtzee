@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ public class Jogo {
         mostrarMenuInicial();
     }
 
-    public static void jogar() {
+    public static void jogar() throws IOException, InterruptedException {
         jogando = true;
         ArrayList<String> jogadoresCadastrados = gerenciadorArquivos.getJogadores();
         Dado dado = new Dado();
@@ -29,11 +30,14 @@ public class Jogo {
             jogadoresEscolhidos.addAll(pegarIndexDosJogadores(escolhaUsuario));
 
             if (menosDeDoisJogadores(jogadoresEscolhidos.size())) {
-                System.out.println("| Selecione no mininimo 2 jogadores para jogar!");
+                System.out.println("|         Selecione no mínimo 2 jogadores para jogar!         |");
+                menu.delay();
+                menu.limparTerminal();
                 sairDaPartida();
             }
 
             if (rodada < 13) {
+                System.out.println("| -=-=-=-=-=-=-=-=-=-=-=-=- YATZHEE -=-=-=-=-=-=-=-=-=-=-=-=- |");
                 // ? Buscar jogadores que o usuário selecionou
                 // Pegar o que o menu retornou
                 List<Jogador> jogadores = new ArrayList<>();
@@ -59,11 +63,10 @@ public class Jogo {
                             break;
                         }
                     }
-                    System.out.println("| -=-=-=-=-= YATZHEE =-=-=-=-=|");
                 }
 
                 for (int i = 0; i < qtdRodadas; i++) {
-                    System.out.println("Rodada - " + rodada);
+                    System.out.print("Rodada - " + rodada + "    ");
                     for (int indice = 0; indice < jogadores.size(); indice++) {
                         Jogador jogador = jogadores.get(indice);
                         Cartela cartela = cartelas.get(indice);
@@ -77,38 +80,119 @@ public class Jogo {
                             cartela.setCartela(j);
                         }
 
-                        System.out.println("Jogador: " + jogador.getNome());
-
+                        System.out.print("| Jogador: " + jogador.getNome() + "    ");
                         mostrarDados(dados);
                         mostrarCartela(cartela);
 
-                        System.out.println("Selecione a categoria em que deseja pontuar: ");
+                        // Adicionar a funçao de rolar novamente - ver cm thiago
+                        for (int contRolagens = 2; contRolagens > 0; contRolagens--) {
+                            System.out.print("| Deseja rolar novamente os dados? [S/N] ");
+                            String resposta = entrada.next().strip().split(" ")[0].toUpperCase();
+                            System.out.println("===============================================================");
+                            
+                            // pergunta se quer rolar novamente os dados até que a resposta seja S ou N
+                            while (resposta.equals("S") == false && resposta.equals("N") == false) {
+                                menu.delay();
+                                menu.limparTerminal();
+                                System.out.println("| Erro: Digite apenas 'S' para SIM e 'N' para NÃO.");
+                                System.out.print("| Deseja rolar novamente os dados? [S/N] ");
+                                resposta = entrada.next().strip().split(" ")[0].toUpperCase();
+                                System.out.println("===============================================================");
+                            }
+                            menu.delay();
+                            menu.limparTerminal();
+    
+                            if (resposta.equals("S")) {
+                                System.out.print("| Rolagem restantes: " + contRolagens + "  ");
+                                mostrarDados(dados);
+                                System.out.print("\n| Informe os índices que deseja rolar novamente: "
+                                            + "\n| Exemplo: '1 3 5'"
+                                            + "\n===============================================================" 
+                                            + "\n| Índices: ");
+                                // Recebe os indices que o usuario deseja rolar novamente
+                                entrada.nextLine();
+                                String indeces[] = entrada.nextLine().strip().split(" ");
+                                System.out.println("===============================================================");
+
+                                menu.delay(); 
+                                menu.limparTerminal();
+
+                                boolean validaReRolagem = dado.validReRolagem(indeces);
+                                
+                                while (!validaReRolagem) {
+                                    mostrarDados(dados);
+                                    System.out.print("\n| Informe os índices que deseja rolar novamente: "
+                                                + "\n| Exemplo: '1 3 5'"
+                                                + "\n===============================================================" 
+                                                + "\n| Índices: ");
+                                    entrada.nextLine();
+                                    
+                                    // indices 2 criado apenas por reclamação do VS
+                                    String indeces2[] = entrada.nextLine().strip().split(" ");
+                                    System.out.println("===============================================================");
+
+                                    menu.delay();
+                                    menu.limparTerminal();
+
+                                    validaReRolagem = dado.validReRolagem(indeces2);
+                                }
+    
+                                dados = dado.getVetor();
+                                System.out.print("| Jogador: " + jogador.getNome() + "    ");
+                                mostrarDados(dados);
+                                mostrarCartela(cartela);
+                            
+                            } else {
+                                break;
+                            }
+                        }
+
+                        mostrarCartela(cartela);
+                        
+                        System.out.print("| Selecione a categoria em que deseja pontuar: ");
                         int categoria = entrada.nextInt();
+                        System.out.println("===============================================================");
 
                         // Validar se a categoria é válida
                         while (categoria > 15 || categoria < 1) {
+                            menu.delay();
+                            menu.limparTerminal();
+                            mostrarCartela(cartela);
+
                             System.out.println("Digite uma categoria válida:");
                             categoria = entrada.nextInt();
+                            System.out.println("===============================================================");
                         }
 
                         while (cartela.getCartela()[categoria - 1] == 0) {
-                            System.out.println("| Está categoria não pode ser marcada pois não há pontuação!");
-                            System.out.println("Digite outra categoria: ");
+                            menu.delay();
+                            menu.limparTerminal();
+                            mostrarCartela(cartela);
+
+                            System.out.println("Erro: Está categoria não pode ser marcada pois não há pontuação!");
+                            System.out.print("| Digite outra categoria: ");
                             categoria = entrada.nextInt();
+                            System.out.println("===============================================================");
                         }
 
                         while (cartela.categoriaJaSelecionada(categoria - 1)) {
+                            menu.delay();
+                            menu.limparTerminal();
+                            mostrarCartela(cartela);
+
                             System.out.println("| Está categoria já foi selecionada!");
-                            System.out.println("Digite outra categoria: ");
+                            System.out.print("| Digite outra categoria: ");
                             categoria = entrada.nextInt();
+                            System.out.println("===============================================================");
                         }
 
                         cartela.setCategoriaSelecionada(categoria - 1);
                         cartela.setPontuacao(categoria - 1);
-                        System.out.println("Pontuação Total: " + cartela.getPontosTot());
+                        System.out.println("| Pontuação Total: " + cartela.getPontosTot());
                         System.out.println("\n\n\n");
+                        menu.delay();
+                        menu.limparTerminal();
 
-                        // Adicionar a funçao de rolar novamente - ver cm thiago
                         // Armazenar resultados
 
                     }
@@ -122,7 +206,7 @@ public class Jogo {
                 }
 
                 // ? Fim do jogo aqui
-                System.out.println("Fim de jogo!!!");
+                System.out.println("| Fim de jogo!!!");
 
                 int maiorPontuacao = 0;
                 String nomeVencedor = "";
@@ -148,7 +232,7 @@ public class Jogo {
         }
     }
 
-    public static void mostrarMenuInicial() {
+    public static void mostrarMenuInicial() throws IOException, InterruptedException {
         // mostra o menu enquato a escolha do jogar gor diferente de 1 (jogo iniciou) ou
         // diferente de zero (fecha o programa)
         do {
@@ -182,7 +266,7 @@ public class Jogo {
         return numJogadores < 2;
     }
 
-    public static void sairDaPartida() {
+    public static void sairDaPartida() throws IOException, InterruptedException {
         jogando = false;
         mostrarMenuInicial();
     }
@@ -219,12 +303,12 @@ public class Jogo {
 
             if (tamanhoString == 1) {
                 System.out.println(
-                        "  [  " + cartela.getCartela()[index]
+                        "  [   " + cartela.getCartela()[index]
                                 + " ]  -  " + (index + 1) + ". " + casaCartela[index]
                                 + (cartela.categoriaJaSelecionada(index) ? " [X]" : ""));
             } else if (tamanhoString == 2) {
                 System.out.println(
-                        "  [ " + cartela.getCartela()[index]
+                        "  [  " + cartela.getCartela()[index]
                                 + " ]  -  " + (index + 1) + ". " + casaCartela[index]
                                 + (cartela.categoriaJaSelecionada(index) ? " [X]" : ""));
             } else {
