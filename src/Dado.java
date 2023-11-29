@@ -37,9 +37,9 @@ public class Dado {
         boolean indexRepet = false, validReRolagem = false, foraDoLimite = false, naoEhNumero = false;
         this.vetorIndex = new int[vetorIndexString.length];
 
-        for (int teste = 0; teste < vetorIndexString.length; teste++) {
+        for (int i = 0; i < vetorIndexString.length; i++) {
             try {
-                this.vetorIndex[teste] = Integer.parseInt(vetorIndexString[teste]) - 1;
+                this.vetorIndex[i] = Integer.parseInt(vetorIndexString[i].trim()) - 1;
             } catch (NumberFormatException e) {
                 // e.printStackTrace();
                 System.out.println("| Erro: Os dados informados, não são números.");
