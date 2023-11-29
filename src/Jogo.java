@@ -27,6 +27,10 @@ public class Jogo {
             jogadoresEscolhidos.clear();
             String escolhaUsuario = menu.escolhaDosJogadores();
 
+            if (usuarioSaiuOuNaoDigitou(escolhaUsuario)) {
+                sairDaPartida();
+            }
+
             jogadoresEscolhidos.addAll(pegarIndexDosJogadores(escolhaUsuario));
 
             if (menosDeDoisJogadores(jogadoresEscolhidos.size())) {
@@ -46,19 +50,20 @@ public class Jogo {
                 if (jogadores.size() == 0) {
                     // Criando jogadores e as cartelas
                     for (int indice : jogadoresEscolhidos) {
-                        if(indice <= jogadoresEscolhidos.size()) {
+                        if (indice <= jogadoresEscolhidos.size()) {
                             Jogador jogador = new Jogador();
                             // Com base no índice de cada jogador que o usuário selecionou
                             // busca o nome dele na lista de jogadores cadastrados
                             String nome = jogadoresCadastrados.get(indice);
                             jogador.setNome(nome);
                             jogadores.add(jogador);
-    
+
                             // Cartela do jogador -> a chave é o índice
                             Cartela cartela = new Cartela();
                             cartelas.add(cartela);
                         } else {
-                            System.out.println("\n| Números dos jogadores inválidos! Escolha somente os números dos jogadores que contém na lista.\n");
+                            System.out.println(
+                                    "\n| Números dos jogadores inválidos! Escolha somente os números dos jogadores que contém na lista.\n");
                             sairDaPartida();
                             break;
                         }
@@ -84,71 +89,72 @@ public class Jogo {
                         mostrarDados(dados);
                         mostrarCartela(cartela);
 
-                        // Adicionar a funçao de rolar novamente - ver cm thiago
+                        // funçao de rolar novamente
                         for (int contRolagens = 2; contRolagens > 0; contRolagens--) {
                             System.out.print("| Deseja rolar novamente os dados? [S/N] ");
-                            String resposta = entrada.next().strip().split(" ")[0].toUpperCase();
+                            String resposta = entrada.next().split(" ")[0].toUpperCase();
                             System.out.println("===============================================================");
-                            
+
                             // pergunta se quer rolar novamente os dados até que a resposta seja S ou N
                             while (resposta.equals("S") == false && resposta.equals("N") == false) {
                                 menu.delay();
                                 menu.limparTerminal();
                                 System.out.println("| Erro: Digite apenas 'S' para SIM e 'N' para NÃO.");
                                 System.out.print("| Deseja rolar novamente os dados? [S/N] ");
-                                resposta = entrada.next().strip().split(" ")[0].toUpperCase();
+                                resposta = entrada.next().split(" ")[0].toUpperCase();
                                 System.out.println("===============================================================");
                             }
                             menu.delay();
                             menu.limparTerminal();
-    
+
                             if (resposta.equals("S")) {
                                 System.out.print("| Rolagem restantes: " + contRolagens + "  ");
                                 mostrarDados(dados);
                                 System.out.print("\n| Informe os índices que deseja rolar novamente: "
-                                            + "\n| Exemplo: '1 3 5'"
-                                            + "\n===============================================================" 
-                                            + "\n| Índices: ");
+                                        + "\n| Exemplo: '1 3 5'"
+                                        + "\n==============================================================="
+                                        + "\n| Índices: ");
                                 // Recebe os indices que o usuario deseja rolar novamente
                                 entrada.nextLine();
-                                String indeces[] = entrada.nextLine().strip().split(" ");
+                                String indices[] = entrada.nextLine().split(" ");
                                 System.out.println("===============================================================");
 
-                                menu.delay(); 
+                                menu.delay();
                                 menu.limparTerminal();
 
-                                boolean validaReRolagem = dado.validReRolagem(indeces);
-                                
+                                boolean validaReRolagem = dado.validReRolagem(indices);
+
                                 while (!validaReRolagem) {
                                     mostrarDados(dados);
                                     System.out.print("\n| Informe os índices que deseja rolar novamente: "
-                                                + "\n| Exemplo: '1 3 5'"
-                                                + "\n===============================================================" 
-                                                + "\n| Índices: ");
+                                            + "\n| Exemplo: '1 3 5'"
+                                            + "\n==============================================================="
+                                            + "\n| Índices: ");
                                     entrada.nextLine();
-                                    
+
                                     // indices 2 criado apenas por reclamação do VS
-                                    String indeces2[] = entrada.nextLine().strip().split(" ");
-                                    System.out.println("===============================================================");
+                                    String indices2[] = entrada.nextLine().split(" ");
+                                    System.out
+                                            .println("===============================================================");
 
                                     menu.delay();
                                     menu.limparTerminal();
 
-                                    validaReRolagem = dado.validReRolagem(indeces2);
+                                    validaReRolagem = dado.validReRolagem(indices2);
                                 }
-    
+
                                 dados = dado.getVetor();
                                 System.out.print("| Jogador: " + jogador.getNome() + "    ");
                                 mostrarDados(dados);
                                 mostrarCartela(cartela);
-                            
+
                             } else {
                                 break;
                             }
                         }
 
                         mostrarCartela(cartela);
-                        
+
                         System.out.print("| Selecione a categoria em que deseja pontuar: ");
                         int categoria = entrada.nextInt();
                         System.out.println("===============================================================");
