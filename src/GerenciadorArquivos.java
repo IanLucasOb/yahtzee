@@ -13,6 +13,22 @@ public class GerenciadorArquivos {
     private ArrayList<String> vetorJogadores = new ArrayList<>();
     private List<String> vetorResultados = new ArrayList<>();
 
+    public GerenciadorArquivos() {
+        try {
+            File jogadores = new File(caminhoDoArquivoDeJogadores);
+            // Cria o arquivo caso não exista
+            if (!jogadores.exists()) {
+                jogadores.createNewFile();
+            }
+            File resultados = new File(caminhoArquivoResultados);
+            if (!resultados.exists()) {
+                resultados.createNewFile();
+            }
+        } catch (Exception e) {
+            System.out.println("| Erro ao criar os arquivos |");
+        }
+    }
+
     public void gravarJogador(String nome) {
         this.lerArquivoJogadores();
 
@@ -27,12 +43,6 @@ public class GerenciadorArquivos {
         }
 
         try {
-            File arquivo = new File(caminhoDoArquivoDeJogadores);
-            // Cria o arquivo caso não exista
-            if (!arquivo.exists()) {
-                arquivo.createNewFile();
-                // throw new Error("O arquivo " + caminhoDoArquivoDeJogadores + "não existe!");
-            }
             FileWriter escritorDeArquivo = new FileWriter(caminhoDoArquivoDeJogadores, true);
             BufferedWriter escritorBuffer = new BufferedWriter(escritorDeArquivo);
 
@@ -77,10 +87,6 @@ public class GerenciadorArquivos {
         try {
             if (resultado.length() > 0) {
                 File arquivo = new File(caminhoArquivoResultados);
-                // Cria o arquivo caso não exista
-                if (!arquivo.exists()) {
-                    arquivo.createNewFile();
-                }
                 // Permite a escrita em um arquivo
                 FileWriter escritorDeArquivo = new FileWriter(arquivo, true);
                 // Armazenar os dados em um buffer
