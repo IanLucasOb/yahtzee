@@ -1,8 +1,6 @@
 public class Cartela {
     private int vetorCartela[] = new int[16];
     private int categoriasSelecionadas[] = new int[16];
-    // private int vetorTempory[] = new int[16]; // ainda pensando na utilidade de
-    // um vetor temporario
     private int contYahtzee = 0;
     private int vetorDados[] = new int[5];
 
