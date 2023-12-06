@@ -174,17 +174,6 @@ public class Jogo {
                             System.out.println("===============================================================");
                         }
 
-                        while (cartela.getCartela()[categoria - 1] == 0) {
-                            menu.delay();
-                            menu.limparTerminal();
-                            mostrarCartela(cartela);
-
-                            System.out.println("Erro: Está categoria não pode ser marcada pois não há pontuação!");
-                            System.out.print("| Digite outra categoria: ");
-                            categoria = entrada.nextInt();
-                            System.out.println("===============================================================");
-                        }
-
                         while (cartela.categoriaJaSelecionada(categoria - 1)) {
                             menu.delay();
                             menu.limparTerminal();
