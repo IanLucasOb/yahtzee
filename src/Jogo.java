@@ -144,6 +144,10 @@ public class Jogo {
                                 }
 
                                 dados = dado.getVetor();
+                                cartela.setVetorDados(dados);
+                                for (int j = 0; j < 15; j++) {
+                                    cartela.setCartela(j);
+                                }
                                 System.out.print("| Jogador: " + jogador.getNome() + "    ");
                                 mostrarDados(dados);
                                 mostrarCartela(cartela);
@@ -153,7 +157,7 @@ public class Jogo {
                             }
                         }
 
-                        mostrarCartela(cartela);
+                        // mostrarCartela(cartela);
 
                         System.out.print("| Selecione a categoria em que deseja pontuar: ");
                         int categoria = entrada.nextInt();
